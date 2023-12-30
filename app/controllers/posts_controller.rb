@@ -4,17 +4,18 @@ class PostsController < ApplicationController
     #shows all uploaded posts in an array
     def index
         posts = Post.all
-        render json: posts
+        post_with_tags = posts.map do |post|
+            { "post" => post, "tags" => tag_finder(post) }
+        end
+        render json: post_with_tags
     end
     
     #show a specific post with an id and its tags
     def show
         post = Post.find(params[:id])
-        tag_ids = PostTag.where(post_id: params[:id]).map{ |posttag| posttag[:id] }
-        tags = tag_ids.map{ |tagid| Tag.find(tagid)[:tag_name] }
         render json: {
             post: post,
-            tags: tags
+            tags: tag_finder(post)
         }
     end
 
@@ -56,6 +57,13 @@ class PostsController < ApplicationController
         def post_params
             params.require(:post).permit(:title, :content, :user_id, :tag_ids, :likes)
         end
+    
+    #finds all tags related to a post
+    private 
+        def tag_finder(post)
+            tag_ids = PostTag.where(post_id: post[:id]).map{ |posttag| posttag[:id] }
+            tags = tag_ids.map{ |tagid| Tag.find(tagid)[:tag_name] }
+        end
 
     #first destroys all tags, takes in tags and adds then each post-tag combination to database
     private
@@ -65,4 +73,5 @@ class PostsController < ApplicationController
                 post.tags << Tag.find(tag_id)
             end
         end
+
 end
