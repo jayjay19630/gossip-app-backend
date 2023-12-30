@@ -45,7 +45,7 @@ class PostsController < ApplicationController
         post = Post.find(params[:id])
         post.destroy
     end
-    
+
     #accepted paramters of received post from frontend
     private
         def post_params
