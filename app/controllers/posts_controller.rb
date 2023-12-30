@@ -7,10 +7,15 @@ class PostsController < ApplicationController
         render json: posts
     end
     
-    #show a specific post with an id
+    #show a specific post with an id and its tags
     def show
         post = Post.find(params[:id])
-        render json: post
+        tag_ids = PostTag.where(post_id: params[:id]).map{ |posttag| posttag[:id] }
+        tags = tag_ids.map{ |tagid| Tag.find(tagid)[:tag_name] }
+        render json: {
+            post: post,
+            tags: tags
+        }
     end
 
     #saves post content into database, unless input is invalid
