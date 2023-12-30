@@ -12,7 +12,10 @@ class UsersController < ApplicationController
     end
     
     private
+
+    #accepted parameters of received comment from frontend
     def user_params
         params.require(:user).permit(:username)
     end
+    
 end

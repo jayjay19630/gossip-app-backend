@@ -6,4 +6,5 @@ class TagsController < ApplicationController
         tags = Tag.all
         render json: tags
     end
+    
 end

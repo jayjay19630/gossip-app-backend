@@ -19,6 +19,15 @@ class PostsController < ApplicationController
         }
     end
 
+    #show a specific post with an id and its tags during editing
+    def edit
+        post = Post.find(params[:id])
+        render json: {
+            post: post,
+            tags: tag_finder(post)
+        }
+    end
+
     #saves post content into database, unless input is invalid
     def create
         post = Post.new(post_params.except(:tag_ids))
@@ -52,21 +61,20 @@ class PostsController < ApplicationController
         post.destroy
     end
 
-    #accepted paramters of received post from frontend
     private
+
+        #accepted parameters of received post from frontend
         def post_params
             params.require(:post).permit(:title, :content, :user_id, :tag_ids, :likes)
         end
     
-    #finds all tags related to a post
-    private 
+        #finds all tags related to a post
         def tag_finder(post)
             tag_ids = PostTag.where(post_id: post[:id]).map{ |posttag| posttag[:id] }
             tags = tag_ids.map{ |tagid| Tag.find(tagid)[:tag_name] }
         end
 
-    #first destroys all tags, takes in tags and adds then each post-tag combination to database
-    private
+        #first destroys all tags, takes in tags and adds then each post-tag combination to database
         def create_or_delete_posts_tags(post, tag_ids)
             post.tags.destroy_all
             tag_ids.each do |tag_id|
