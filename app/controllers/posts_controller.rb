@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-    skip_before_action :verify_authenticity_token
 
     #shows all uploaded posts in an array
     def index
