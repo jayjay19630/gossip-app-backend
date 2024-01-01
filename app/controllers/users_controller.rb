@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    skip_before_action :authorized, only: [:create, :login]
 
     #user controller saves username input into database and returns JWT, unless username is invalid
     def create
