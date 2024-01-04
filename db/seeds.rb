@@ -43,13 +43,13 @@ posts_content = [
     "random text",
     "random text",
 ]
-likes = [0, 0, 3, 5, 100, 0, 0, 0, 3, 6, 11, 13, 13, 14, 15]
+likes = [0, 0, 3, 5, 100, 0, 0, 0, 3, 6, 10, 13, 13, 14, 15]
 user_ids = [1, 2, 1, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]
 tag_ids = [[4, 8], [4, 8], [1, 7], [], [1, 7, 9, 10], [], [], [], [1, 5], [6, 7], [], [4, 5], [], [2, 3], []]
 
 titles.length().times.each do |i|
     Post.create(title: titles[i], content: posts_content[i], user_id: user_ids[i], likes: likes[i])
     tag_ids[i].each do |tag_id|
-        Post_Tag.create(post_id: i, tag_id: tag_id)
+        PostTag.create(post_id: i, tag_id: tag_id)
     end
 end

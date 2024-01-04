@@ -69,7 +69,7 @@ class PostsController < ApplicationController
     
         #finds all tags related to a post
         def tag_finder(post)
-            tag_ids = PostTag.where(post_id: post[:id]).map{ |posttag| posttag[:id] }
+            tag_ids = PostTag.where(post_id: post[:id]).map{ |posttag| posttag.tag_id }
             tags = tag_ids.map{ |tagid| Tag.find(tagid)[:tag_name] }
         end
 
