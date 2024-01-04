@@ -4,7 +4,7 @@ class PostsController < ApplicationController
     def index
         posts = Post.all
         post_with_tags = posts.map do |post|
-            { "post" => post, "tags" => tag_finder(post) }
+            { "post" => post, "username" => user_finder(post), "tags" => tag_finder(post) }
         end
         render json: post_with_tags
     end
@@ -71,6 +71,11 @@ class PostsController < ApplicationController
         def tag_finder(post)
             tag_ids = PostTag.where(post_id: post[:id]).map{ |posttag| posttag[:id] }
             tags = tag_ids.map{ |tagid| Tag.find(tagid)[:tag_name] }
+        end
+
+        #finds user of the post
+        def user_finder(post)
+            username = User.find(post[:user_id]).username
         end
 
         #first destroys all tags, takes in tags and adds then each post-tag combination to database

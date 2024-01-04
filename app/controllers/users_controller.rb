@@ -19,7 +19,7 @@ class UsersController < ApplicationController
             token = encode_token({user_id: @user.id})
             render json: {user: @user, token: token}, status: 201
         else
-            render json: {error: "Invalid username or password"}
+            render json: {error: "Invalid username"}, status: 422
         end
     end
 
