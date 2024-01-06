@@ -9,12 +9,15 @@ class PostsController < ApplicationController
         render json: post_with_tags
     end
     
-    #show a specific post with an id and its tags
+    #show a specific post with an id, its tags and comments
     def show
         post = Post.find(params[:id])
+        comments = Comment.where(post_id: params[:id])
         render json: {
             post: post,
-            tags: tag_finder(post)
+            username: user_finder(post),
+            tags: tag_finder(post),
+            comments: comments
         }
     end
 
