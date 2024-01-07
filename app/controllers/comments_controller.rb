@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
 
     #creates a new comment on a certain post
     def create
-        comment = @post.comments.build(comment_params)
+        comment = @post.comments.build(comment_params) 
         if comment.save
             render json: comment, status: 201
         else
@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
         if comment.update(comment_params)
             render json: comment, status: 200
         else 
-            render json: { error: comment.erros.messages }, status: 422
+            render json: { error: comment.errors.messages }, status: 422
         end
     end
 
