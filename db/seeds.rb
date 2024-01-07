@@ -50,6 +50,6 @@ tag_ids = [[4, 8], [4, 8], [1, 7], [], [1, 7, 9, 10], [], [], [], [1, 5], [6, 7]
 titles.length().times.each do |i|
     Post.create(title: titles[i], content: posts_content[i], user_id: user_ids[i], likes: likes[i])
     tag_ids[i].each do |tag_id|
-        PostTag.create(post_id: i, tag_id: tag_id)
+        PostTag.create(post_id: i+1, tag_id: tag_id)
     end
 end
