@@ -4,7 +4,7 @@ class PostsController < ApplicationController
     def index
         posts = Post.all
         post_with_tags = posts.map do |post|
-            { "post" => post, "username" => user_finder(post), "tags" => tag_finder(post) }
+            { "post" => post, "username" => post_user_finder(post), "tags" => tag_finder(post) }
         end
         render json: post_with_tags
     end
@@ -13,11 +13,12 @@ class PostsController < ApplicationController
     def show
         post = Post.find(params[:id])
         comments = Comment.where(post_id: params[:id])
+
         render json: {
             post: post,
-            username: user_finder(post),
+            username: post_user_finder(post),
             tags: tag_finder(post),
-            comments: comments
+            comments: comments.map { |comment| {'id' => comment.id, 'content' => comment.content, 'username' => comment_user_finder(comment), 'created_at' => comment.created_at} }
         }
     end
 
@@ -77,9 +78,16 @@ class PostsController < ApplicationController
         end
 
         #finds user of the post
-        def user_finder(post)
+        def post_user_finder(post)
             username = User.find(post[:user_id]).username
         end
+
+        #finds user of comment
+        def comment_user_finder(comment)
+            user_id = comment.user_id
+            username = User.find(user_id).username
+        end
+
 
         #first destroys all tags, takes in tags and adds then each post-tag combination to database
         def create_or_delete_posts_tags(post, tag_ids)
