@@ -59,14 +59,15 @@ class PostsController < ApplicationController
     #increments likes on a post
     def increment
         post = Post.find(params[:id])
-        Like.create(post_id: post.id, user_id: current_user.id)
+        like = Like.create(post_id: post.id, user_id: current_user.id)
+        render json: like, status: 200
     end
 
     #decrements likes on a post
     def decrement
         post = Post.find(params[:id])
-        liked = Like.where(post_id: post.id).first
-        liked.destroy
+        liked = Like.where(post_id: post.id).first.destroy
+        render json: liked, status: 200
     end
 
     #deletes record in database
@@ -98,7 +99,6 @@ class PostsController < ApplicationController
             user_id = comment.user_id
             username = User.find(user_id).username
         end
-
 
         #first destroys all tags, takes in tags and adds then each post-tag combination to database
         def create_or_delete_posts_tags(post, tag_ids)
