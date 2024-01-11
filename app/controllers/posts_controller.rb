@@ -4,7 +4,8 @@ class PostsController < ApplicationController
     def index
         posts = Post.all
         post_with_tags = posts.map do |post|
-            { "post" => post, "username" => post_user_finder(post), "tags" => tag_finder(post) }
+            likes = Like.where(post_id: post.id).count
+            { "post" => post, "username" => post_user_finder(post), "tags" => tag_finder(post), "likes" => likes }
         end
         render json: post_with_tags
     end
@@ -22,7 +23,7 @@ class PostsController < ApplicationController
         }
     end
 
-    #show a specific post with an id and its tags during editing
+    #show a specific post with an id,and its tags during editing
     def edit
         post = Post.find(params[:id])
         render json: {
@@ -41,11 +42,6 @@ class PostsController < ApplicationController
             render json: { error: post.errors.messages }, status: 422
         end
     end
-
-    #retrieves post content to be changed by the user
-    def edit
-        post = Post.find(params[:id])
-    end
     
     #updates the post content if input is valid
     def update
@@ -58,6 +54,21 @@ class PostsController < ApplicationController
         end
     end
     
+    #increments likes on a post
+    def increment
+        post = Post.find(params[:id])
+        like.c
+        likes = post.likes
+        post.update(likes: likes + 1)
+    end
+
+    #decrements likes on a post
+    def decrement
+        post = Post.find(params[:id])
+        likes = post.likes
+        post.update(likes: likes - 1)
+    end
+
     #deletes record in database
     def destroy
         post = Post.find(params[:id])

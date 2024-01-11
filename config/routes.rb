@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     resources :comments, :except => [:new, :show]
   end
 
+  #routes for changing likes on posts
+  post 'posts/:id/increment', to: 'posts#increment'
+  post 'posts/:id/decrement', to: 'posts#decrement'
+
   #routes for finding tags
   get 'tags', to: 'tags#index'
 
