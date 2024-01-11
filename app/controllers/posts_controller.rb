@@ -5,7 +5,9 @@ class PostsController < ApplicationController
         posts = Post.all
         post_with_tags = posts.map do |post|
             likes = Like.where(post_id: post.id).count
-            { "post" => post, "username" => post_user_finder(post), "tags" => tag_finder(post), "likes" => likes }
+            userLike = Like.where(user_id: current_user.id).where(post_id: post.id)
+            liked_by_user = userLike.empty? ? false : true
+            { "post" => post, "username" => post_user_finder(post), "tags" => tag_finder(post), "likes" => likes, "liked_by_user" => liked_by_user}
         end
         render json: post_with_tags
     end
@@ -57,16 +59,14 @@ class PostsController < ApplicationController
     #increments likes on a post
     def increment
         post = Post.find(params[:id])
-        like.c
-        likes = post.likes
-        post.update(likes: likes + 1)
+        Like.create(post_id: post.id, user_id: current_user.id)
     end
 
     #decrements likes on a post
     def decrement
         post = Post.find(params[:id])
-        likes = post.likes
-        post.update(likes: likes - 1)
+        liked = Like.where(post_id: post.id).first
+        liked.destroy
     end
 
     #deletes record in database
