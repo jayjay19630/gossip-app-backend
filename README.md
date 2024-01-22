@@ -17,7 +17,7 @@ To get a local copy up and running, note the prerequisites and follow these step
 
 - [ ] Ruby
 - [ ] Rails
-- [ ] MySQL
+- [ ] Postgres 14.10
 - [ ] Git and Github
 - [ ] Any code editor (VSC, Brackets, etc)
 
