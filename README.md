@@ -28,11 +28,9 @@ To get a local copy up and running, note the prerequisites and follow these step
 3. Copy and paste the following code into the terminal: git clone https://github.com/positivelyjon/gossip-app-backend.git
 4. Run `cd gossip-app-backend`
 5. Run `bundle install`
-6. Run `open config/database.yml`
-7. Change the default password to your password assigned to your MySQL instance
-8. Run `rails db:create`
-9. Run `rails db:migrate`
-10. Run `rails db:seed`
-11. Run `rails server`
+7. Run `rails db:create`
+8. Run `rails db:migrate`
+9. Run `rails db:seed`
+10. Run `rails server`
 
 
