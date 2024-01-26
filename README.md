@@ -25,7 +25,7 @@ To get a local copy up and running, note the prerequisites and follow these step
 
 1. Open terminal
 2. Navigate to your desired location to place this repository
-3. Copy and paste the following code into the terminal: git clone https://github.com/positivelyjon/gossip-app-backend.git
+3. Copy and paste the following code into the terminal: git clone https://github.com/jayjay19630/gossip-app-backend.git
 4. Run `cd gossip-app-backend`
 5. Run `bundle install`
 7. Run `rails db:create`
